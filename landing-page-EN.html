@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Luiza Pereira Dourado — Front-end Developer</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #fdf8f4;
+      --bg2: #f5eef8;
+      --bg3: #ecdff2;
+      --border: rgba(140,90,170,0.12);
+      --border2: rgba(140,90,170,0.28);
+      --text: #1e1624;
+      --muted: #7a6887;
+      --accent: #8b4fad;
+      --accent2: #b07fd4;
+      --serif: 'Playfair Display', serif;
+      --sans: 'DM Sans', sans-serif;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--sans);
+      font-size: 16px;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 1.1rem 2.5rem;
+      background: rgba(253,248,244,0.92);
+      backdrop-filter: blur(10px);
+      border-bottom: 0.5px solid var(--border);
+    }
+    .nav-logo { font-family: var(--serif); font-size: 15px; color: var(--text); font-style: italic; }
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a { font-size: 13px; color: var(--muted); text-decoration: none; transition: color 0.2s; }
+    .nav-links a:hover { color: var(--text); }
+    .nav-status { display: flex; align-items: center; gap: 7px; font-size: 12px; color: var(--accent); }
+    .pulse { width: 7px; height: 7px; border-radius: 50%; background: var(--accent); animation: pulse 2s infinite; }
+    @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.3} }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 100vh;
+      display: grid; grid-template-columns: 1fr 1fr;
+      align-items: center;
+      padding: 7rem 2.5rem 4rem;
+      border-bottom: 0.5px solid var(--border);
+      gap: 3rem;
+    }
+    .hero-left {}
+    .hero-tag {
+      font-size: 11px; color: var(--muted);
+      letter-spacing: 0.14em; text-transform: uppercase;
+      margin-bottom: 1.4rem;
+      display: flex; align-items: center; gap: 10px;
+    }
+    .hero-tag::before { content: ''; width: 24px; height: 1px; background: var(--muted); display: inline-block; }
+    .hero-title {
+      font-family: var(--serif);
+      font-size: clamp(2.6rem, 5vw, 4rem);
+      font-weight: 700;
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+      margin-bottom: 1.5rem;
+    }
+    .hero-title em { color: var(--accent); font-style: italic; }
+    .hero-sub {
+      font-size: 1rem; color: var(--muted); max-width: 420px;
+      line-height: 1.75; font-weight: 300; margin-bottom: 2rem;
+    }
+    .hero-cta { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 2rem; }
+    .btn-main {
+      background: var(--text); color: var(--bg);
+      border: none; padding: 12px 24px; border-radius: 6px;
+      font-size: 14px; font-weight: 500; cursor: pointer;
+      font-family: var(--sans); text-decoration: none;
+      transition: opacity 0.2s, transform 0.15s;
+    }
+    .btn-main:hover { opacity: 0.82; transform: translateY(-1px); }
+    .btn-ghost {
+      background: transparent; color: var(--text);
+      border: 0.5px solid var(--border2); padding: 12px 24px; border-radius: 6px;
+      font-size: 14px; cursor: pointer; font-family: var(--sans);
+      text-decoration: none; transition: border-color 0.2s, transform 0.15s;
+    }
+    .btn-ghost:hover { border-color: var(--text); transform: translateY(-1px); }
+    .lang-badges { display: flex; gap: 8px; flex-wrap: wrap; }
+    .lang-badge { font-size: 12px; padding: 4px 12px; border-radius: 20px; background: var(--bg2); border: 0.5px solid var(--border); color: var(--muted); }
+
+    .hero-right {
+      display: flex; flex-direction: column; gap: 14px;
+    }
+    .info-card {
+      background: var(--bg2); border: 0.5px solid var(--border);
+      border-radius: 12px; padding: 1.4rem 1.5rem;
+    }
+    .info-label { font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); margin-bottom: 6px; }
+    .info-val { font-size: 15px; font-weight: 500; }
+    .info-sub { font-size: 12px; color: var(--muted); margin-top: 3px; }
+
+    /* ── SECTIONS ── */
+    section { padding: 5rem 2.5rem; border-bottom: 0.5px solid var(--border); }
+    .section-eyebrow {
+      font-size: 11px; color: var(--muted);
+      letter-spacing: 0.14em; text-transform: uppercase; margin-bottom: 2.5rem;
+      display: flex; align-items: center; gap: 12px;
+    }
+    .section-eyebrow::before { content: ''; width: 24px; height: 1px; background: var(--border2); }
+    .section-title {
+      font-family: var(--serif); font-size: 2rem; font-weight: 700;
+      margin-bottom: 2rem; letter-spacing: -0.02em;
+    }
+
+    /* ── SKILLS ── */
+    .skills-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 12px; }
+    .skill-card {
+      background: var(--bg); border: 0.5px solid var(--border);
+      border-radius: 10px; padding: 1.4rem 1.5rem;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+    .skill-card:hover { border-color: var(--border2); transform: translateY(-2px); }
+    .skill-icon { font-size: 20px; margin-bottom: 10px; }
+    .skill-name { font-size: 14px; font-weight: 500; margin-bottom: 5px; }
+    .skill-desc { font-size: 12px; color: var(--muted); line-height: 1.5; margin-bottom: 10px; }
+    .stags { display: flex; gap: 5px; flex-wrap: wrap; }
+    .stag { font-size: 10px; padding: 2px 8px; border-radius: 4px; background: var(--bg2); color: var(--muted); border: 0.5px solid var(--border); }
+
+    /* ── TIMELINE (Experiência) ── */
+    .timeline { display: flex; flex-direction: column; gap: 0; }
+    .tl-item {
+      display: grid; grid-template-columns: 140px 1fr;
+      gap: 2rem; padding: 2rem 0;
+      border-bottom: 0.5px solid var(--border);
+    }
+    .tl-item:last-child { border-bottom: none; }
+    .tl-date { font-size: 12px; color: var(--muted); padding-top: 4px; line-height: 1.5; }
+    .tl-content {}
+    .tl-title { font-size: 16px; font-weight: 500; margin-bottom: 2px; }
+    .tl-company { font-size: 13px; color: var(--accent); margin-bottom: 10px; }
+    .tl-bullets { list-style: none; display: flex; flex-direction: column; gap: 5px; }
+    .tl-bullets li { font-size: 13px; color: var(--muted); line-height: 1.5; padding-left: 14px; position: relative; }
+    .tl-bullets li::before { content: '—'; position: absolute; left: 0; color: var(--border2); }
+
+    /* ── EDUCAÇÃO ── */
+    .edu-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 14px; }
+    .edu-card {
+      background: var(--bg2); border: 0.5px solid var(--border);
+      border-radius: 12px; padding: 1.5rem;
+    }
+    .edu-badge { font-size: 11px; padding: 3px 10px; border-radius: 20px; background: var(--bg3); color: var(--muted); border: 0.5px solid var(--border); display: inline-block; margin-bottom: 10px; }
+    .edu-school { font-size: 15px; font-weight: 500; margin-bottom: 5px; }
+    .edu-desc { font-size: 13px; color: var(--muted); line-height: 1.5; }
+
+    /* ── DESTAQUES PESSOAIS ── */
+    .highlights { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; }
+    .hl-card {
+      background: var(--bg2); border-radius: 10px;
+      border: 0.5px solid var(--border);
+      padding: 1.5rem;
+    }
+    .hl-icon { font-size: 22px; margin-bottom: 10px; }
+    .hl-text { font-size: 13px; color: var(--muted); line-height: 1.6; }
+    .hl-text strong { color: var(--text); font-weight: 500; }
+
+    /* ── CONTATO ── */
+    .contact-wrap { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: start; }
+    .contact-title { font-family: var(--serif); font-size: 2.2rem; font-weight: 700; letter-spacing: -0.02em; line-height: 1.2; margin-bottom: 1rem; }
+    .contact-title em { color: var(--accent); font-style: italic; }
+    .contact-sub { font-size: 14px; color: var(--muted); line-height: 1.7; font-weight: 300; }
+    .contact-links { display: flex; flex-direction: column; gap: 10px; }
+    .clink {
+      display: flex; align-items: center; gap: 12px;
+      padding: 14px 18px; border: 0.5px solid var(--border);
+      border-radius: 8px; font-size: 13px; color: var(--text);
+      text-decoration: none; background: var(--bg2);
+      transition: border-color 0.2s, transform 0.15s;
+    }
+    .clink:hover { border-color: var(--border2); transform: translateY(-1px); }
+    .clink-icon { font-size: 16px; }
+    .clink-info {}
+    .clink-label { font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em; }
+    .clink-val { font-size: 13px; font-weight: 500; }
+
+    /* ── FOOTER ── */
+    footer { padding: 2rem 2.5rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; }
+    .foot-copy { font-size: 12px; color: var(--muted); }
+
+    /* ── ANIMATIONS ── */
+    @keyframes fadeUp { from { opacity:0; transform:translateY(20px); } to { opacity:1; transform:translateY(0); } }
+    .fade-up { animation: fadeUp 0.65s ease forwards; opacity: 0; }
+    .d1 { animation-delay: 0.1s; } .d2 { animation-delay: 0.25s; }
+    .d3 { animation-delay: 0.4s; } .d4 { animation-delay: 0.55s; }
+    .d5 { animation-delay: 0.7s; }
+
+    @media (max-width: 720px) {
+      nav { padding: 1rem 1.2rem; }
+      .nav-links { display: none; }
+      .hero { grid-template-columns: 1fr; min-height: auto; padding: 6rem 1.2rem 3rem; }
+      .hero-right { display: none; }
+      section { padding: 3rem 1.2rem; }
+      .tl-item { grid-template-columns: 1fr; gap: 0.5rem; }
+      .contact-wrap { grid-template-columns: 1fr; }
+      footer { padding: 1.5rem 1.2rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <div class="nav-logo">Luiza Dourado</div>
+    <ul class="nav-links">
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#experiencia">Experience</a></li>
+      <li><a href="#educacao">Education</a></li>
+      <li><a href="#contato">Contact</a></li>
+    </ul>
+    <div class="nav-status"><span class="pulse"></span>Open to opportunities</div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero" id="inicio">
+    <div class="hero-left">
+      <div class="hero-tag fade-up d1">Front-end Developer · Vancouver, BC</div>
+      <h1 class="hero-title fade-up d2">
+        Luiza<br>
+        Pereira<br>
+        <em>Dourado</em>
+      </h1>
+      <p class="hero-sub fade-up d3">
+        Front-end development student based in Vancouver, passionate about building modern interfaces. Background in customer service and entrepreneurship — I bring communication and problem-solving to every project.
+      </p>
+      <div class="hero-cta fade-up d4">
+        <a class="btn-main" href="https://github.com/Luiza-PD?tab=repositories" target="_blank" style="display:inline-flex;align-items:center;gap:8px;">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+        View projects ↗
+      </a>
+        <a class="btn-ghost" href="mailto:luizapereiradourado@gmail.com" style="display:inline-flex;align-items:center;gap:8px;">Get in touch <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#b07fd4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M2 7l10 7 10-7"/></svg></a>
+      </div>
+      <div class="lang-badges fade-up d5">
+        <span class="lang-badge">🇧🇷 Portuguese — native</span>
+        <span class="lang-badge">🇬🇧 English — advanced</span>
+        <span class="lang-badge">🇪🇸 Spanish — intermediate</span>
+      </div>
+    </div>
+
+    <div class="hero-right fade-up d3">
+      <div class="info-card">
+        <div class="info-label">Location</div>
+        <div class="info-val">Vancouver, BC — Canada</div>
+        <div class="info-sub">1215 W 13th Avenue, V6H 1N5</div>
+      </div>
+      <div class="info-card">
+        <div class="info-label">Currently studying</div>
+        <div class="info-val">Greystone College</div>
+        <div class="info-sub">Front-end Development · 2025 – 2026</div>
+      </div>
+      <div class="info-card">
+        <div class="info-label">Achievement</div>
+        <div class="info-val">Entrepreneur at 17</div>
+        <div class="info-sub">Own confectionery business — from production to marketing</div>
+      </div>
+      <div class="info-card">
+        <div class="info-label">Status</div>
+        <div class="info-val" style="color: var(--accent);">🟢 Open to opportunities</div>
+        <div class="info-sub">Internships, projects & junior roles</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SKILLS -->
+  <section id="skills">
+    <div class="section-eyebrow">Technical skills</div>
+    <div class="section-title">What I build</div>
+    <div class="skills-grid">
+      <div class="skill-card">
+        <div class="skill-icon">🎨</div>
+        <div class="skill-name">HTML & CSS</div>
+        <div class="skill-desc">Semantic structure and advanced styling with a focus on accessibility and best practices.</div>
+        <div class="stags"><span class="stag">HTML5</span><span class="stag">CSS3</span><span class="stag">SASS</span><span class="stag">Bootstrap</span></div>
+      </div>
+      <div class="skill-card">
+        <div class="skill-icon">⚡</div>
+        <div class="skill-name">JavaScript & TypeScript</div>
+        <div class="skill-desc">Programming logic, data structures and object-oriented programming.</div>
+        <div class="stags"><span class="stag">JavaScript</span><span class="stag">TypeScript</span><span class="stag">OOP</span></div>
+      </div>
+      <div class="skill-card">
+        <div class="skill-icon">🅰️</div>
+        <div class="skill-name">Angular & React</div>
+        <div class="skill-desc">Application development with modern frameworks and component-based architecture.</div>
+        <div class="stags"><span class="stag">Angular</span><span class="stag">React (basic)</span></div>
+      </div>
+      <div class="skill-card">
+        <div class="skill-icon">🛠️</div>
+        <div class="skill-name">Tools</div>
+        <div class="skill-desc">Version control, branch management, development environment and AI tools to speed up projects.</div>
+        <div class="stags"><span class="stag">Git</span><span class="stag">GitHub</span><span class="stag">VS Code</span><span class="stag">Claude AI</span><span class="stag">Generative AI</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- EXPERIENCE -->
+  <section id="experiencia">
+    <div class="section-eyebrow">Work experience</div>
+    <div class="section-title">My journey</div>
+    <div class="timeline">
+      <div class="tl-item">
+        <div class="tl-date">Oct 2025<br>present</div>
+        <div class="tl-content">
+          <div class="tl-title">Sales Associate</div>
+          <div class="tl-company">Cobs Bread · Vancouver, BC</div>
+          <ul class="tl-bullets">
+            <li>Delivered high-quality customer service in a high-volume retail bakery</li>
+            <li>Handled cash transactions and balanced register with 100% accuracy</li>
+            <li>Identified customer needs and recommended solutions in a fast-paced environment</li>
+            <li>Collaborated with team members to optimize workflow during peak hours</li>
+          </ul>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-date">Nov 2023<br>Jul 2025</div>
+        <div class="tl-content">
+          <div class="tl-title">Confectioner — Entrepreneur</div>
+          <div class="tl-company">Self-employed · Brazil</div>
+          <ul class="tl-bullets">
+            <li>Founded and managed own business at age 17 — production, sales and finances</li>
+            <li>Created digital marketing campaigns and packaging design for social media</li>
+            <li>Developed a special Easter menu with 3 new flavours and customised marketing</li>
+            <li>Expanded to local restaurants through consignment sales, growing the client base</li>
+            <li>Managed inventory, pricing and expense tracking to ensure profitability</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- EDUCATION -->
+  <section id="educacao">
+    <div class="section-eyebrow">Education</div>
+    <div class="section-title">Where I learn</div>
+    <div class="edu-grid">
+      <div class="edu-card">
+        <span class="edu-badge">2025 – 2026</span>
+        <div class="edu-school">Greystone College — Vancouver</div>
+        <div class="edu-desc">Front-end Development: HTML, CSS, advanced JavaScript, TypeScript, Angular (basic & advanced) and workplace tools.</div>
+      </div>
+      <div class="edu-card">
+        <span class="edu-badge">2011 – 2024</span>
+        <div class="edu-school">Primary & Secondary School</div>
+        <div class="edu-desc">Full academic formation, with acceptance into one of Brazil's top universities straight from high school.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- HIGHLIGHTS -->
+  <section>
+    <div class="section-eyebrow">About me</div>
+    <div class="section-title">What sets me apart</div>
+    <div class="highlights">
+      <div class="hl-card">
+        <div class="hl-icon">🚀</div>
+        <div class="hl-text"><strong>Entrepreneur since 17.</strong> Built and scaled a business from scratch — from production to digital marketing and financial management.</div>
+      </div>
+      <div class="hl-card">
+        <div class="hl-icon">🎓</div>
+        <div class="hl-text"><strong>Top university admission.</strong> Accepted into one of Brazil's best universities straight out of high school.</div>
+      </div>
+      <div class="hl-card">
+        <div class="hl-icon">🤝</div>
+        <div class="hl-text"><strong>People-first mindset.</strong> Customer service background with strong empathy, active listening and clear communication.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contato">
+    <div class="contact-wrap">
+      <div>
+        <div class="section-eyebrow">Contact</div>
+        <div class="contact-title">Let's <em>build</em><br>something together?</div>
+        <p class="contact-sub" style="margin-top:1rem;">
+          I'm looking for opportunities to apply my front-end skills in real-world projects. Internships, freelance work or junior positions — I'd love to chat!
+        </p>
+      </div>
+      <div class="contact-links">
+        <a class="clink" href="mailto:luizapereiradourado@gmail.com">
+          <span class="clink-icon">✉️</span>
+          <div class="clink-info">
+            <div class="clink-label">Email</div>
+            <div class="clink-val">luizapereiradourado@gmail.com</div>
+          </div>
+        </a>
+        <a class="clink" href="https://www.linkedin.com/in/luiza-p-dourado" target="_blank">
+          <span class="clink-icon">💼</span>
+          <div class="clink-info">
+            <div class="clink-label">LinkedIn</div>
+            <div class="clink-val">luiza-p-dourado</div>
+          </div>
+        </a>
+        <a class="clink" href="tel:+12368639089">
+          <span class="clink-icon">📱</span>
+          <div class="clink-info">
+            <div class="clink-label">Phone</div>
+            <div class="clink-val">+1 (236) 863-9089</div>
+          </div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="foot-copy">© 2026 Luiza Pereira Dourado — Vancouver, BC</div>
+    <div class="foot-copy">Front-end Developer in the making ✦</div>
+  </footer>
+
+</body>
+</html>
